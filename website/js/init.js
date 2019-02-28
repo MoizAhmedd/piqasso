@@ -84,19 +84,35 @@ skel.init({
 			var state = "classical";
 			var resolution = '400/400';
 			var artStyle = "galaxy";
+			var order = 1;
 	
 		// Re-enable animations until we're done loading everything.
 			$window.load(function() {
 				$body.removeClass('loading');
-				$("#selected-art").text = " Test";
-				$(document).ready(function() {
-					$('select').prettyDropdown();
-				  });
+				var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.display === "block") {
+      content.style.display = "none";
+    } else {
+      content.style.display = "block";
+    }
+  });
+}
 			});
 
 			$("#selected-style").change(function(){
 				var art = $(this).children("option:selected").val();
 				artStyle = art;
+			});
+
+			$("#selected-order").change(function(){
+				var _order = $(this).children("option:selected").val();
+				order = _order;
 			});
 			
 			$("#generate").click(function(){
@@ -118,7 +134,7 @@ skel.init({
 						}
 					}
 				};
-				xhttp.open("GET", "http://3.18.27.43:8000/" + resolution + "/1/true/" + artStyle + "/" + state, true);
+				xhttp.open("GET", "http://3.18.27.43:8000/" + resolution + "/" + order + "/true/" + artStyle + "/" + state, true);
 				xhttp.send();
 				$('#generated_lightbox').css('display','none');
 				$('#helper_text').css('display','none');

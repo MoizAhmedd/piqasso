@@ -1183,3 +1183,16 @@ u {
 	border-left: 4px solid #41A7FC;
   }
   
+  /* Style the button that is used to open and close the collapsible content */
+.collapsible {
+	cursor: pointer;
+	border: none;
+	text-align: left;
+	outline: none;
+  }
+  
+  /* Style the collapsible content. Note: hidden by default */
+  .content {
+	display: none;
+	overflow: hidden;
+  }

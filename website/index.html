@@ -91,12 +91,21 @@
 						<ul class="buttons vertical">
 							<li><a id="generate" class="button fit scrolly">Generate</a></li>
 						</ul>
-						<select id="selected-style" style="margin: -20px 0 10px 0">
+						<div class="collapsible" style="text-align:right; margin:-20px 0 20px 0">Advanced <i class="fa fa-chevron-down"></i></div>
+						<div class="content" style="margin:0 0 10px 0">
+							<select id="selected-style" style="margin: -20px 0 10px 0">
 								<option value="galaxy">Galaxies</option>
 								<option value="monet_painting">Monet</option>
 								<option value="picasso_painting">Picasso</option>
 								<option value="gold">Gold</option>
-							  </select>
+							</select>
+							<select id="selected-order" style="margin: -20px 0 10px 0">
+								<option value="1">1</option>
+								<option value="10">10</option>
+								<option value="50">50</option>
+								<option value="100">100</option>
+							</select>
+						</div>
 						<i id="loading-cog" style="display:none; margin:0 auto;" class="fa fa-cog fa-spin fa-3x fa-fw"></i>
 						<a style="display:none" data-featherlight="image" id="generated_lightbox"><img style="max-width:200px;" id="generated_image"/></a>
 						<!-- <span id="helper_text" style="display:none">Click the image to see it in all its glory</span> -->

@@ -10,7 +10,7 @@
   position: absolute;
   top: 0;
   left: 0;
-  background: #fff;
+  background: rgba(255,255,255,0.9);
   border: 1px solid #a9a9a9;
   box-sizing: content-box;
   color: #000;
