@@ -81,10 +81,60 @@ skel.init({
 			$header = $('#header'),
 			$banner = $('#banner');
 
+			var state = "classical";
+			var resolution = '400/400';
+			var artStyle = "galaxy";
+	
 		// Re-enable animations until we're done loading everything.
 			$window.load(function() {
 				$body.removeClass('loading');
+				$("#selected-art").text = " Test";
+				$(document).ready(function() {
+					$('select').prettyDropdown();
+				  });
 			});
+
+			$("#selected-style").change(function(){
+				var art = $(this).children("option:selected").val();
+				artStyle = art;
+			});
+			
+			$("#generate").click(function(){
+				var xhttp = new XMLHttpRequest();
+				xhttp.onreadystatechange = function() {
+					if (this.readyState == 4) {
+						if(this.status == 200){
+							// Typical action to be performed when the document is ready:
+							console.log(xhttp.responseText);
+							$('#generated_lightbox').css('display','block');
+							$('#generated_image').attr('src',"http://3.18.27.43:8000/" + xhttp.responseText);
+							$('#generated_lightbox').attr('href',"http://3.18.27.43:8000/" + xhttp.responseText);
+							$('#helper_text').css('display','block');
+							$('#loading-cog').css('display','none');
+						}
+						else {
+							$('#loading-cog').css('display','none');
+							alert('Sometimes things don\'t go according to plan.');
+						}
+					}
+				};
+				xhttp.open("GET", "http://3.18.27.43:8000/" + resolution + "/1/true/" + artStyle + "/" + state, true);
+				xhttp.send();
+				$('#generated_lightbox').css('display','none');
+				$('#helper_text').css('display','none');
+				$('#loading-cog').css('display','block');
+			});
+
+			$("#cbx").click(function(){
+				if($("#cbx").is(":checked")){
+					state = 'quantum';
+					resolution = "40/40";
+				}
+				else {
+					state = 'classical';
+					resolution = "400/400";
+				}
+			})
 
 		// Placeholder fix (IE<10).
 		// If IE<10, use formerize to add support for the "placeholder" attribute.
