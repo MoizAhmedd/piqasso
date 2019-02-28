@@ -13,10 +13,7 @@ import strgen
 from strgen import StringGenerator
 
 
-
-
-
-def generate_image(im_width,im_height,norder,pickle1,set,random_string):
+def generate_image(im_width,im_height,norder,pickle1,set,random_string, state):
     #print('\\\\')
 
 
@@ -36,10 +33,11 @@ def generate_image(im_width,im_height,norder,pickle1,set,random_string):
     #b= os.path.dirname('../templates/index.html')
     #print(os.path.dirname(b))
 
-    directory = './' + str(set) + '/'
+    directory = './data/training/images/raw/' + str(set) + '/'
     im_width = im_width
     im_height = im_height
     norder = norder #args.norder[0]
+    randomGenerator = state
 
     try:
         should_pickle = pickle1
@@ -92,7 +90,8 @@ def generate_image(im_width,im_height,norder,pickle1,set,random_string):
 
     gen_seq = stepper.new_set_length_sequence(
             model = trained_data,
-            steps = im_width * im_height
+            steps = im_width * im_height,
+            state = randomGenerator
             )
 
     #print('Generating Image...')
@@ -104,7 +103,7 @@ def generate_image(im_width,im_height,norder,pickle1,set,random_string):
     # print(gen_seq)
 
 
-def homePageView(request,im_width,im_height,norder,pickle1,set):
+def homePageView(request,im_width,im_height,norder,pickle1,set, state):
     #im_width = request.GET.get('im_width')
     #im_height = request.GET.get('im_height')
     #norder = request.GET.get('norder')
@@ -115,9 +114,13 @@ def homePageView(request,im_width,im_height,norder,pickle1,set):
 
     random_string = StringGenerator("[\d\w]{10}").render()
 
-    generate_image(im_width,im_height,norder,pickle1,set,random_string)
+    generate_image(im_width,im_height,norder,pickle1,set,random_string, state)
     response = HttpResponse(content_type = "image/png")
     print(random_string)
     img = Image.open("data/processed/images/" + str(set) + "-" + random_string + ".png")
     img.save(response,'png')
     return response
+
+def test(request):
+    print('papito')
+    return HttpResponse('Hello World')

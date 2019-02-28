@@ -1,4 +1,4 @@
-import attr, random
+import attr, random as random_
 import math
 from qiskit import QuantumCircuit, ClassicalRegister, QuantumRegister, execute
 from qiskit_aqua import get_aer_backend
@@ -47,7 +47,7 @@ class Stepper(object):
     Return:
         string: A complete sequence constructed from the model
     """
-    def new_set_length_sequence(self, model, steps):
+    def new_set_length_sequence(self, model, steps, state):
         #print(type(model))
         random = self.qrandom(len(list(model.keys())))
         start_key = list(model.keys())[random]
@@ -57,7 +57,7 @@ class Stepper(object):
         order = len(prev_tokens)
         next_token = ''
         for i in range(0, steps - order):
-            next_token = self.step(model, ' '.join(prev_tokens))
+            next_token = self.step(model, ' '.join(prev_tokens), state)
             prev_tokens.pop(0)
             prev_tokens.append(next_token)
 
@@ -96,9 +96,12 @@ class Stepper(object):
     Return:
         string: the next word to be used in the phrase
     """
-    def step(self, model, key):
-        random = self.qrandom(len(list(model[key])))
-        return list(model[key])[random]
+    def step(self, model, key, state):
+        if state == 'classical':
+            return random_.choice(list(model[key]))
+        else:
+            random = self.qrandom(len(list(model[key])))
+            return list(model[key])[random]
 
     MAX_QUBITS = 16
 
@@ -123,7 +126,7 @@ class Stepper(object):
         register_sizes = self.get_register_sizes(n_bits, 16)
         # print("Qubits "+ str(register_sizes))
 
-        backend = get_aer_backend('qasm_simulator')
+        backend = get_aer_backend('statevector_simulator')
 
         for x in register_sizes:
             q = QuantumRegister(x)
