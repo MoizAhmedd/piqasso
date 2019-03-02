@@ -7,4 +7,4 @@
 An Image Generator that creates works of art using a real Quantum Computer.
 
 ## Description
-Visit <a href = "https://Piqasso.ml">piqasso.ml</a>
+Visit <a href = "piqasso.ml">piqasso.ml</a>
